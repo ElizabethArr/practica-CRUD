@@ -13,6 +13,7 @@ export default function UsuariosPage() {
 
   const [errors, setErrors] = useState({
     gender: "",
+    age: "",
   });
 
   const validateGender = (value: string) => {
@@ -23,15 +24,31 @@ export default function UsuariosPage() {
     return "";
   };
 
+  const validateAge = (value: string) => {
+    const age = parseInt(value, 10);
+    if (isNaN(age) || age < 18 || age > 60) {
+      return "Age must be between 18 and 60";
+    }
+    return "";
+  };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "gender") {
       const error = validateGender(value);
-      setErrors({
-        ...errors,
+      setErrors((prevErrors) => ({
+        ...prevErrors,
         gender: error,
-      });
+      }));
+    }
+
+    if (name === "age") {
+      const error = validateAge(value);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        age: error,
+      }));
     }
 
     setFormData({
@@ -43,9 +60,10 @@ export default function UsuariosPage() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const genderError = validateGender(formData.gender);
+    const ageError = validateAge(formData.age);
 
-    if (genderError) {
-      setErrors({ ...errors, gender: genderError });
+    if (genderError || ageError) {
+      setErrors({ ...errors, gender: genderError, age: ageError });
       return;
     }
 
@@ -112,6 +130,7 @@ export default function UsuariosPage() {
             onChange={handleChange}
             required
           />
+          {errors.age && <p style={{ color: "red" }}>{errors.age}</p>}
         </div>
 
         <div>
