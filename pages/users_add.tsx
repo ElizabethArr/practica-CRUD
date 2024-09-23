@@ -26,6 +26,7 @@ export default function UsuariosPage() {
 
   const validateAge = (value: string) => {
     const age = parseInt(value, 10);
+
     if (isNaN(age) || age < 18 || age > 60) {
       return "Age must be between 18 and 60";
     }
