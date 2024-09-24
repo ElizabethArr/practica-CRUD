@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, KeyboardEvent } from "react";
 import Link from "next/link";
 
 export default function UsuariosPage() {
@@ -18,10 +18,13 @@ export default function UsuariosPage() {
   });
 
   const validateGender = (value: string) => {
-    const lowerValue = value.toLowerCase();
-    if (value && lowerValue !== "f" && lowerValue !== "m") {
-      return 'Gender must be "f", "m", or empty';
+    const upperValue = value.toUpperCase();
+
+    // Validar que solo sea "M" o "F"
+    if (!["M", "F"].includes(upperValue)) {
+      return 'El género debe ser "M" o "F"';
     }
+
     return "";
   };
 
@@ -36,7 +39,6 @@ export default function UsuariosPage() {
 
   const validatePhone = (value: string) => {
     const regex = /^\d{10}$/;
-    console.log("Test:", regex.test(value));
     if (!regex.test(value)) {
       return "El número de teléfono debe tener exactamente 10 dígitos";
     }
@@ -49,19 +51,15 @@ export default function UsuariosPage() {
     // Eliminar cualquier carácter que no sea un número
     value = value.replace(/\D/g, "");
 
-    console.log("value", value);
-
     if (value.length > 10) {
       return;
     }
 
-    // Actualizar el valor en el estado sin caracteres no numéricos
     setFormData((prevData) => ({
       ...prevData,
       phone: value,
     }));
 
-    // Validar si el número tiene exactamente 10 dígitos
     const phoneError = validatePhone(value);
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -94,6 +92,14 @@ export default function UsuariosPage() {
     });
   };
 
+  // Prevenir que el usuario escriba algo que no sea "M" o "F"
+  const handleGenderKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    const allowedKeys = ["m", "f", "M", "F", "Backspace", "Delete", "Tab", "ArrowLeft", "ArrowRight"];
+    if (!allowedKeys.includes(e.key)) {
+      e.preventDefault();
+    }
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -103,7 +109,6 @@ export default function UsuariosPage() {
 
     if (genderError || ageError || phoneError) {
       setErrors({
-        ...errors,
         gender: genderError,
         age: ageError,
         phone: phoneError,
@@ -159,6 +164,7 @@ export default function UsuariosPage() {
             name="gender"
             value={formData.gender}
             onChange={handleChange}
+            onKeyDown={handleGenderKeyDown} // Aquí se previenen las entradas no deseadas
           />
           {errors.gender && <p style={{ color: "red" }}>{errors.gender}</p>}
         </div>
