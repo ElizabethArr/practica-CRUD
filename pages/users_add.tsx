@@ -27,36 +27,46 @@ export default function UsuariosPage() {
 
   const validateAge = (value: string) => {
     const age = parseInt(value, 10);
+
     if (isNaN(age) || age < 18 || age > 60) {
-      return "Age must be between 18 and 60";
+      return "La edad debe estar entre 18 y 60 años.";
+    }
+    return "";
+  };
+
+  const validatePhone = (value: string) => {
+    const regex = /^\d{10}$/;
+    console.log("Test:", regex.test(value));
+    if (!regex.test(value)) {
+      return "El número de teléfono debe tener exactamente 10 dígitos";
     }
     return "";
   };
 
   const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const numericValue = value.replace(/\D/g, ""); // Eliminar todo lo que no sea un número
+    let { value } = e.target;
 
-    // Solo permitir números y limitar a 10 caracteres
-    if (numericValue.length <= 10) {
-      setFormData((prevData) => ({
-        ...prevData,
-        phone: numericValue,
-      }));
+    // Eliminar cualquier carácter que no sea un número
+    value = value.replace(/\D/g, "");
+
+    console.log("value", value);
+
+    if (value.length > 10) {
+      return;
     }
 
-    // Validar que tenga exactamente 10 dígitos
-    if (numericValue.length === 10) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        phone: "",
-      }));
-    } else {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        phone: "El número de teléfono debe tener exactamente 10 dígitos",
-      }));
-    }
+    // Actualizar el valor en el estado sin caracteres no numéricos
+    setFormData((prevData) => ({
+      ...prevData,
+      phone: value,
+    }));
+
+    // Validar si el número tiene exactamente 10 dígitos
+    const phoneError = validatePhone(value);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      phone: phoneError,
+    }));
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -86,12 +96,10 @@ export default function UsuariosPage() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const genderError = validateGender(formData.gender);
     const ageError = validateAge(formData.age);
-    const phoneError =
-      formData.phone.length !== 10
-        ? "El número de teléfono debe tener exactamente 10 dígitos"
-        : "";
+    const phoneError = validatePhone(formData.phone);
 
     if (genderError || ageError || phoneError) {
       setErrors({
@@ -104,7 +112,6 @@ export default function UsuariosPage() {
     }
 
     console.log("Formulario enviado:", formData);
-    
   };
 
   return (
@@ -135,7 +142,7 @@ export default function UsuariosPage() {
         <div>
           <label htmlFor="email">Email:</label>
           <input
-            type="email"
+            type="text"
             id="email"
             name="email"
             value={formData.email}
@@ -188,7 +195,7 @@ export default function UsuariosPage() {
             id="phone"
             name="phone"
             value={formData.phone}
-            onChange={handlePhoneChange} 
+            onChange={handlePhoneChange}
             required
           />
           {errors.phone && <p style={{ color: "red" }}>{errors.phone}</p>}
