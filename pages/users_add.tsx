@@ -15,6 +15,7 @@ export default function UsuariosPage() {
     gender: "",
     age: "",
     phone: "",
+    email:"",
   });
 
   const validateGender = (value: string) => {
@@ -44,6 +45,15 @@ export default function UsuariosPage() {
     }
     return "";
   };
+
+  const validateEmail = (value: string) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!regex.test(value)) {
+      return "El correo electronico no es valido";
+    } 
+
+    return "";
+  }
 
   const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
     let { value } = e.target;
@@ -86,6 +96,14 @@ export default function UsuariosPage() {
       }));
     }
 
+     if (name === "email") {
+      const error = validateEmail(value);
+       setErrors((prevErrors) => ({
+       ...prevErrors,
+       email: error,
+       }));
+     }
+
     setFormData({
       ...formData,
       [name]: value,
@@ -106,12 +124,15 @@ export default function UsuariosPage() {
     const genderError = validateGender(formData.gender);
     const ageError = validateAge(formData.age);
     const phoneError = validatePhone(formData.phone);
+    const emailError = validateEmail(formData.email);
 
-    if (genderError || ageError || phoneError) {
+    if (genderError || ageError || phoneError || emailError) {
       setErrors({
         gender: genderError,
         age: ageError,
         phone: phoneError,
+        email:emailError,
+
       });
       return;
     }
@@ -154,6 +175,7 @@ export default function UsuariosPage() {
             onChange={handleChange}
             required
           />
+          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
         </div>
 
         <div>
