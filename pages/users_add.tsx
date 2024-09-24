@@ -14,10 +14,11 @@ export default function UsuariosPage() {
   const [errors, setErrors] = useState({
     gender: "",
     age: "",
+    phone: "",
   });
 
   const validateGender = (value: string) => {
-    const lowerValue = value.toLowerCase(); // Convertir a minúsculas
+    const lowerValue = value.toLowerCase();
     if (value && lowerValue !== "f" && lowerValue !== "m") {
       return 'Gender must be "f", "m", or empty';
     }
@@ -26,11 +27,36 @@ export default function UsuariosPage() {
 
   const validateAge = (value: string) => {
     const age = parseInt(value, 10);
-
     if (isNaN(age) || age < 18 || age > 60) {
       return "Age must be between 18 and 60";
     }
     return "";
+  };
+
+  const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const numericValue = value.replace(/\D/g, ""); // Eliminar todo lo que no sea un número
+
+    // Solo permitir números y limitar a 10 caracteres
+    if (numericValue.length <= 10) {
+      setFormData((prevData) => ({
+        ...prevData,
+        phone: numericValue,
+      }));
+    }
+
+    // Validar que tenga exactamente 10 dígitos
+    if (numericValue.length === 10) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        phone: "",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        phone: "El número de teléfono debe tener exactamente 10 dígitos",
+      }));
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,14 +88,23 @@ export default function UsuariosPage() {
     e.preventDefault();
     const genderError = validateGender(formData.gender);
     const ageError = validateAge(formData.age);
+    const phoneError =
+      formData.phone.length !== 10
+        ? "El número de teléfono debe tener exactamente 10 dígitos"
+        : "";
 
-    if (genderError || ageError) {
-      setErrors({ ...errors, gender: genderError, age: ageError });
+    if (genderError || ageError || phoneError) {
+      setErrors({
+        ...errors,
+        gender: genderError,
+        age: ageError,
+        phone: phoneError,
+      });
       return;
     }
 
     console.log("Formulario enviado:", formData);
-    // Aquí podrías agregar lógica para enviar los datos a un servidor o procesarlos de otra manera
+    
   };
 
   return (
@@ -149,13 +184,14 @@ export default function UsuariosPage() {
         <div>
           <label htmlFor="phone">Phone:</label>
           <input
-            type="tel"
+            type="text"
             id="phone"
             name="phone"
             value={formData.phone}
-            onChange={handleChange}
+            onChange={handlePhoneChange} 
             required
           />
+          {errors.phone && <p style={{ color: "red" }}>{errors.phone}</p>}
         </div>
 
         <button type="submit">Submit</button>
