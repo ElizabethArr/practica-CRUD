@@ -17,6 +17,7 @@ export default function UsuariosPage() {
     age: "",
     phone: "",
     email: "",
+    rfc:"",
 
   });
 
@@ -56,6 +57,16 @@ export default function UsuariosPage() {
 
     return "";
   };
+
+  const validateRFC = (value: string) => {
+    const rfcRegex = /^[A-ZÑ&]{3,4}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[A-Z\d]{3}$/;
+    if (!rfcRegex.test(value)) {
+      return "El RFC no es valido";
+    }
+
+    return "";
+  }
+  
 
 
 
@@ -110,6 +121,15 @@ export default function UsuariosPage() {
       }));
     }
 
+    if (name === "rfc") {
+      const error = validateRFC(value);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        rfc: error,
+      }));
+    }
+
+
     setFormData({
       ...formData,
       [name]: value,
@@ -141,14 +161,16 @@ export default function UsuariosPage() {
     const ageError = validateAge(formData.age);
     const phoneError = validatePhone(formData.phone);
     const emailError = validateEmail(formData.email);
+    const rfcError = validateRFC(formData.rfc);
     
 
-     if (genderError || ageError || phoneError || emailError ) {
+     if (genderError || ageError || phoneError || emailError || rfcError ) {
       setErrors({
         gender: genderError,
         age: ageError,
         phone: phoneError,
         email: emailError,
+        rfc: rfcError,
        
       });
 
@@ -261,7 +283,7 @@ export default function UsuariosPage() {
             onChange={handleChange}
             required
           />
-          {/* {errors.phone && <p style={{ color: "red" }}>{errors.phone}</p>} */}
+         {errors.rfc && <p style={{ color: "red" }}>{errors.rfc}</p>} 
         </div>
 
         <button type="submit">Submit</button>
