@@ -9,6 +9,7 @@ export default function UsuariosPage() {
     age: "",
     role: "",
     phone: "",
+    rfc:"",
   });
 
   const [errors, setErrors] = useState({
@@ -16,6 +17,7 @@ export default function UsuariosPage() {
     age: "",
     phone: "",
     email: "",
+
   });
 
   const validateGender = (value: string) => {
@@ -54,6 +56,8 @@ export default function UsuariosPage() {
 
     return "";
   };
+
+
 
   const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
     let { value } = e.target;
@@ -137,14 +141,17 @@ export default function UsuariosPage() {
     const ageError = validateAge(formData.age);
     const phoneError = validatePhone(formData.phone);
     const emailError = validateEmail(formData.email);
+    
 
-    if (genderError || ageError || phoneError || emailError) {
+     if (genderError || ageError || phoneError || emailError ) {
       setErrors({
         gender: genderError,
         age: ageError,
         phone: phoneError,
         email: emailError,
+       
       });
+
       return;
     }
 
@@ -242,6 +249,19 @@ export default function UsuariosPage() {
             required
           />
           {errors.phone && <p style={{ color: "red" }}>{errors.phone}</p>}
+        </div>
+
+        <div>
+          <label htmlFor="rfc">RFC:</label>
+          <input
+            type="text"
+            id="rfc"
+            name="rfc"
+            value={formData.rfc}
+            onChange={handleChange}
+            required
+          />
+          {/* {errors.phone && <p style={{ color: "red" }}>{errors.phone}</p>} */}
         </div>
 
         <button type="submit">Submit</button>
