@@ -15,7 +15,7 @@ export default function UsuariosPage() {
     gender: "",
     age: "",
     phone: "",
-    email:"",
+    email: "",
   });
 
   const validateGender = (value: string) => {
@@ -50,10 +50,10 @@ export default function UsuariosPage() {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!regex.test(value)) {
       return "El correo electronico no es valido";
-    } 
+    }
 
     return "";
-  }
+  };
 
   const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
     let { value } = e.target;
@@ -77,7 +77,9 @@ export default function UsuariosPage() {
     }));
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
 
     if (name === "gender") {
@@ -96,13 +98,13 @@ export default function UsuariosPage() {
       }));
     }
 
-     if (name === "email") {
+    if (name === "email") {
       const error = validateEmail(value);
-       setErrors((prevErrors) => ({
-       ...prevErrors,
-       email: error,
-       }));
-     }
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: error,
+      }));
+    }
 
     setFormData({
       ...formData,
@@ -112,7 +114,17 @@ export default function UsuariosPage() {
 
   // Prevenir que el usuario escriba algo que no sea "M" o "F"
   const handleGenderKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    const allowedKeys = ["m", "f", "M", "F", "Backspace", "Delete", "Tab", "ArrowLeft", "ArrowRight"];
+    const allowedKeys = [
+      "m",
+      "f",
+      "M",
+      "F",
+      "Backspace",
+      "Delete",
+      "Tab",
+      "ArrowLeft",
+      "ArrowRight",
+    ];
     if (!allowedKeys.includes(e.key)) {
       e.preventDefault();
     }
@@ -131,8 +143,7 @@ export default function UsuariosPage() {
         gender: genderError,
         age: ageError,
         phone: phoneError,
-        email:emailError,
-
+        email: emailError,
       });
       return;
     }
@@ -206,14 +217,18 @@ export default function UsuariosPage() {
 
         <div>
           <label htmlFor="role">Role:</label>
-          <input
-            type="text"
+          <select
             id="role"
             name="role"
             value={formData.role}
             onChange={handleChange}
             required
-          />
+          >
+            <option value="">Seleccione un rol</option>
+            <option value="admin">Administrador</option>
+            <option value="supervisor">Supervisor</option>
+            <option value="employee">Empleado</option>
+          </select>
         </div>
 
         <div>
