@@ -1,7 +1,10 @@
 import { useState, ChangeEvent, FormEvent, KeyboardEvent } from "react";
 import Link from "next/link";
+import { useUsers } from "./useUsers"; // Importamos el hook para manejar usuari
 
 export default function UsuariosPage() {
+  const { addUser } = useUsers(); // Llamamos al hook y usamos la función addUse
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -9,7 +12,7 @@ export default function UsuariosPage() {
     age: "",
     role: "",
     phone: "",
-    rfc:"",
+    rfc: "",
   });
 
   const [errors, setErrors] = useState({
@@ -17,8 +20,7 @@ export default function UsuariosPage() {
     age: "",
     phone: "",
     email: "",
-    rfc:"",
-
+    rfc: "",
   });
 
   const validateGender = (value: string) => {
@@ -59,16 +61,14 @@ export default function UsuariosPage() {
   };
 
   const validateRFC = (value: string) => {
-    const rfcRegex = /^[A-ZÑ&]{3,4}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[A-Z\d]{3}$/;
+    const rfcRegex =
+      /^[A-ZÑ&]{3,4}\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])[A-Z\d]{3}$/;
     if (!rfcRegex.test(value)) {
       return "El RFC no es valido";
     }
 
     return "";
-  }
-  
-
-
+  };
 
   const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
     let { value } = e.target;
@@ -129,7 +129,6 @@ export default function UsuariosPage() {
       }));
     }
 
-
     setFormData({
       ...formData,
       [name]: value,
@@ -162,20 +161,32 @@ export default function UsuariosPage() {
     const phoneError = validatePhone(formData.phone);
     const emailError = validateEmail(formData.email);
     const rfcError = validateRFC(formData.rfc);
-    
 
-     if (genderError || ageError || phoneError || emailError || rfcError ) {
+    if (genderError || ageError || phoneError || emailError || rfcError) {
       setErrors({
         gender: genderError,
         age: ageError,
         phone: phoneError,
         email: emailError,
         rfc: rfcError,
-       
       });
 
       return;
     }
+
+    // Llamamos a la función addUser para agregar el nuevo usuario
+    addUser(formData);
+
+    // Reseteamos el formulario
+    setFormData({
+      name: "",
+      email: "",
+      gender: "",
+      age: "",
+      role: "",
+      phone: "",
+      rfc: "",
+    });
 
     console.log("Formulario enviado:", formData);
   };
@@ -283,7 +294,7 @@ export default function UsuariosPage() {
             onChange={handleChange}
             required
           />
-         {errors.rfc && <p style={{ color: "red" }}>{errors.rfc}</p>} 
+          {errors.rfc && <p style={{ color: "red" }}>{errors.rfc}</p>}
         </div>
 
         <button type="submit">Submit</button>

@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useUsers } from "./useUsers";
 
 const UsersPage = () => {
-  // Usamos el hook para obtener los datos de usuarios
-  const users = useUsers();
+  const { users } = useUsers(); // Usamos el hook para obtener la lista de usuar
 
   return (
     <>
@@ -28,11 +27,13 @@ const UsersPage = () => {
               <th>Age </th>
               <th>Role</th>
               <th>Phone</th>
+              <th>RFC</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
+
                 <td>{user.id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
@@ -40,6 +41,7 @@ const UsersPage = () => {
                 <td>{user.age}</td>
                 <td>{user.role}</td>
                 <td>{user.phone}</td>
+              <td>{user.rfc}</td>
               </tr>
             ))}
           </tbody>

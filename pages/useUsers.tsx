@@ -1,15 +1,35 @@
-import Link from 'next/link'; 
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 
-// Hook separado
+// Definimos la interfaz del usuario
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  gender: string;
+  age: string;
+  role: string;
+  phone: string;
+  rfc: string;
+}
+
+// Hook personalizado para manejar usuarios
 export const useUsers = () => {
-  // Crear un estado para almacenar los usuarios
-  const [users, setUsers] = useState([
-    { id: 1, name: "Juan", email: "juan@example.com", gender:"M", age:20, role:"User",phone:"1234567891"},
-    { id: 2, name: "Maria", email: "maria@example.com", gender:"M", age:30, role:"User",phone:"09876543212" },
-    { id: 3, name: "Pedro", email: "pedro@example.com", gender:"M", age:40, role:"User",phone:"9870765432" }
-  ]);
+  const [users, setUsers] = useState<User[]>([]); // Aquí guardamos los usuarios
 
-  // Retornar el array de usuarios para que pueda ser usado por otros componentes
-  return users;
+  useEffect(() => {
+    const storedUsers = localStorage.getItem("users");
+    if (storedUsers) {
+      setUsers(JSON.parse(storedUsers));
+    }
+  }, []);
+
+  // Función para agregar un nuevo usuario
+  const addUser = (newUser: Omit<User, "id">) => {
+    const id = users.length + 1; // Genera un ID único
+    const updatedUsers = [...users, { ...newUser, id }];
+    setUsers(updatedUsers); // Agrega el nuevo usuario a la lista
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+  };
+
+  return { users, addUser }; // Retorna los usuarios y la función para agregar usuarios
 };
