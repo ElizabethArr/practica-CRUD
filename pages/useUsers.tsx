@@ -16,6 +16,7 @@ interface User {
 export const useUsers = () => {
   const [users, setUsers] = useState<User[]>([]); // Aquí guardamos los usuarios
 
+  // Cargar usuarios desde el localStorage cuando se monta el componente
   useEffect(() => {
     const storedUsers = localStorage.getItem("users");
     if (storedUsers) {
@@ -31,5 +32,12 @@ export const useUsers = () => {
     localStorage.setItem("users", JSON.stringify(updatedUsers));
   };
 
-  return { users, addUser }; // Retorna los usuarios y la función para agregar usuarios
+   // Función para eliminar un usuario
+   const deleteUser = (id: number) => {
+    const updatedUsers = users.filter((user) => user.id !== id);
+    setUsers(updatedUsers); // Actualiza la lista de usuarios
+    localStorage.setItem("users", JSON.stringify(updatedUsers)); // Actualiza el localStorage
+  };
+
+  return { users, addUser, deleteUser }; // Retorna los usuarios y la función para agregar usuarios
 };

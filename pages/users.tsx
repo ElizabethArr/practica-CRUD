@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useUsers } from "./useUsers";
 
 const UsersPage = () => {
-  const { users } = useUsers(); // Usamos el hook para obtener la lista de usuar
+  const { users , deleteUser } = useUsers(); // Usamos el hook para obtener la lista de usuar
 
   return (
     <>
@@ -42,7 +42,11 @@ const UsersPage = () => {
                 <td>{user.role}</td>
                 <td>{user.phone}</td>
               <td>{user.rfc}</td>
+              <td>
+              <button onClick={() => deleteUser(user.id)}>Eliminar</button> {/* Botón para eliminar */}
+              </td>
               </tr>
+              
             ))}
           </tbody>
         </table>
