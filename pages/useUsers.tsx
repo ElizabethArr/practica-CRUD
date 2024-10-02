@@ -32,12 +32,21 @@ export const useUsers = () => {
     localStorage.setItem("users", JSON.stringify(updatedUsers));
   };
 
-   // Función para eliminar un usuario
-   const deleteUser = (id: number) => {
+  // Función para eliminar un usuario
+  const deleteUser = (id: number) => {
     const updatedUsers = users.filter((user) => user.id !== id);
     setUsers(updatedUsers); // Actualiza la lista de usuarios
     localStorage.setItem("users", JSON.stringify(updatedUsers)); // Actualiza el localStorage
   };
 
-  return { users, addUser, deleteUser }; // Retorna los usuarios y la función para agregar usuarios
+  // Función para editar un usuario existente
+  const editUser = (updatedUser: User) => {
+    const updatedUsers = users.map((user) =>
+      user.id === updatedUser.id ? updatedUser : user
+    );
+    setUsers(updatedUsers); // Actualiza el usuario en la lista
+    localStorage.setItem("users", JSON.stringify(updatedUsers)); // Actualiza el localStorage
+  };
+
+  return { users, addUser, deleteUser, editUser }; // Retorna los usuarios y las funciones para manejar usuarios
 };
