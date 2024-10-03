@@ -4,6 +4,7 @@ import { useUsers } from "./useUsers"; // Importamos el hook para manejar usuari
 import styles from './users_add.module.css'; // Importa el módulo CSS
 
 
+
 export default function UsuariosPage() {
   const { addUser } = useUsers(); // Llamamos al hook y usamos la función addUse
 
@@ -204,7 +205,7 @@ export default function UsuariosPage() {
         </Link>
 
         <Link href="/users" passHref>
-          <button  className={styles.button}>User</button>
+          <button  className={styles.button}>Users</button>
         </Link>
       </div>
 
@@ -302,7 +303,7 @@ export default function UsuariosPage() {
           {errors.rfc && <p className={styles.errorMessage}>{errors.rfc}</p>}
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" className={styles.submitButton}>Submit</button>
       </form>
     </div>
   );

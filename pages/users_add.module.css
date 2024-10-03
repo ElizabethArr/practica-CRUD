@@ -6,6 +6,7 @@
     min-height: 100vh;
     background-color: #f5f5f5;
     padding: 20px;
+    font-family: 'Arial', sans-serif;
     
   }
   
@@ -69,5 +70,16 @@
   .errorMessage {
     color: red;
     font-size: 12px;
+  }
+
+  .submitButton {
+    padding: 10px 20px;
+    background-color: #28a745; /* Color de fondo verde */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px;
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s ease;
   }
   

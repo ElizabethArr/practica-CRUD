@@ -3,7 +3,7 @@ import styles from "./users.module.css";
 
 export default function Home() {
   return (
-    <div className={styles.buttonGroup}>
+    <div className={styles.buttonGroup} >
       <h1>Home</h1>
 
       <Link href="/users" passHref>

@@ -291,7 +291,7 @@ export default function EditUserPage() {
           {errors.rfc && <p className={styles.errorMessage}>{errors.rfc}</p>}
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" className={styles.submitButton}>Submit</button>
       </form>
     </div>
   );

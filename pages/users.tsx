@@ -1,6 +1,4 @@
 
-
-
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useUsers } from "./useUsers";
@@ -15,15 +13,15 @@ const UsersPage = () => {
   };
 
   return (
-    <div className={styles.container}> {/* Aplica la clase contenedora */}
-      <h2 className={styles.title}>List Users</h2> {/* Aplica la clase al título */}
+    <div className={styles.container}> 
+      <h2 className={styles.title}>List Users</h2> 
 
-      <div > {/* Aplica la clase al contenedor de botones */}
+      <div > 
         <Link href="/" passHref>
-          <button className={styles.button}>Home</button> {/* Aplica la clase al botón */}
+          <button className={styles.button}>Home</button> 
         </Link>
         <Link href="/users_add" passHref>
-          <button className={styles.button}>Add User</button> {/* Aplica la clase al botón */}
+          <button className={styles.button}>Add User</button> 
         </Link>
       </div>
 
@@ -52,7 +50,7 @@ const UsersPage = () => {
               <td className={styles.tableCell}>{user.role}</td>
               <td className={styles.tableCell}>{user.phone}</td>
               <td className={styles.tableCell}>{user.rfc}</td>
-              <td className={styles.actions}>
+              <td className={styles.tableCell}>
                 <button onClick={() => deleteUser(user.id)}>Eliminar</button> {/* Completa esta línea */}
                 <button onClick={() => handleEdit(user.id)}>Editar</button>
               </td>
