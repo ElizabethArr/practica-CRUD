@@ -1,12 +1,15 @@
-import Link from 'next/link';
+import Link from "next/link";
+import styles from "./users.module.css";
 
 export default function Home() {
   return (
-    <div>
+    <div className={styles.buttonGroup}>
       <h1>Home</h1>
+
       <Link href="/users" passHref>
-        <button>Users</button>
+        <button className={styles.button}>Users</button>
       </Link>
     </div>
   );
 }
+

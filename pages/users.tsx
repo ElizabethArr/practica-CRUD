@@ -1,64 +1,66 @@
+
+
+
 import Link from "next/link";
-import { useRouter } from "next/router"; // Importamos useRouter
+import { useRouter } from "next/router";
 import { useUsers } from "./useUsers";
+import styles from './users.module.css'; // Asegúrate de que el nombre del archivo sea correcto
 
 const UsersPage = () => {
-  const { users, deleteUser } = useUsers(); // Usamos el hook para obtener la lista de usuarios
-  const router = useRouter(); // Inicializamos useRouter para la navegación
+  const { users, deleteUser } = useUsers();
+  const router = useRouter();
 
-  // Función para manejar la edición del usuario
   const handleEdit = (id: number) => {
-    router.push(`/users_edit?id=${id}`); // Redirigimos a la página de edición pasando el ID del usuario como query param
+    router.push(`/users_edit?id=${id}`);
   };
 
   return (
-    <>
-      <div>
-        <h2>List Users</h2>
+    <div className={styles.container}> {/* Aplica la clase contenedora */}
+      <h2 className={styles.title}>List Users</h2> {/* Aplica la clase al título */}
 
+      <div > {/* Aplica la clase al contenedor de botones */}
         <Link href="/" passHref>
-          <button style={{ marginRight: "10px" }}>Home</button>
+          <button className={styles.button}>Home</button> {/* Aplica la clase al botón */}
         </Link>
-
         <Link href="/users_add" passHref>
-          <button>Add User</button>
+          <button className={styles.button}>Add User</button> {/* Aplica la clase al botón */}
         </Link>
-
-        <table border={1}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Gender</th>
-              <th>Age</th>
-              <th>Role</th>
-              <th>Phone</th>
-              <th>RFC</th>
-              <th>Actions</th> {/* Agregamos una columna para las acciones */}
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.gender}</td>
-                <td>{user.age}</td>
-                <td>{user.role}</td>
-                <td>{user.phone}</td>
-                <td>{user.rfc}</td>
-                <td>
-                  <button onClick={() => deleteUser(user.id)}>Eliminar</button> {/* Botón para eliminar */}
-                  <button onClick={() => handleEdit(user.id)}>Editar</button> {/* Botón para editar */}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
-    </>
+
+      <table className={styles.table}> {/* Aplica la clase a la tabla */}
+        <thead>
+          <tr>
+            <th className={styles.tableHeader}>ID</th> {/* Aplica la clase a los encabezados */}
+            <th className={styles.tableHeader}>Name</th>
+            <th className={styles.tableHeader}>Email</th>
+            <th className={styles.tableHeader}>Gender</th>
+            <th className={styles.tableHeader}>Age</th>
+            <th className={styles.tableHeader}>Role</th>
+            <th className={styles.tableHeader}>Phone</th>
+            <th className={styles.tableHeader}>RFC</th>
+            <th className={styles.tableHeader}>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td className={styles.tableCell}>{user.id}</td> {/* Aplica la clase a las celdas */}
+              <td className={styles.tableCell}>{user.name}</td>
+              <td className={styles.tableCell}>{user.email}</td>
+              <td className={styles.tableCell}>{user.gender}</td>
+              <td className={styles.tableCell}>{user.age}</td>
+              <td className={styles.tableCell}>{user.role}</td>
+              <td className={styles.tableCell}>{user.phone}</td>
+              <td className={styles.tableCell}>{user.rfc}</td>
+              <td className={styles.actions}>
+                <button onClick={() => deleteUser(user.id)}>Eliminar</button> {/* Completa esta línea */}
+                <button onClick={() => handleEdit(user.id)}>Editar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

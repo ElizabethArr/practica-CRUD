@@ -1,6 +1,8 @@
 import { useState, ChangeEvent, FormEvent, KeyboardEvent } from "react";
 import Link from "next/link";
 import { useUsers } from "./useUsers"; // Importamos el hook para manejar usuari
+import styles from './users_add.module.css'; // Importa el módulo CSS
+
 
 export default function UsuariosPage() {
   const { addUser } = useUsers(); // Llamamos al hook y usamos la función addUse
@@ -191,20 +193,23 @@ export default function UsuariosPage() {
     console.log("Formulario enviado:", formData);
   };
 
+
   return (
-    <div>
-      <h1>Add User</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Add User</h1>
 
-      <Link href="/" passHref>
-        <button style={{ marginRight: "10px" }}>Home</button>
-      </Link>
+      <div className={styles.buttonGroup}>
+        <Link href="/" passHref>
+          <button  className={styles.button}>Home</button>
+        </Link>
 
-      <Link href="/users" passHref>
-        <button style={{ marginRight: "10px" }}>User</button>
-      </Link>
+        <Link href="/users" passHref>
+          <button  className={styles.button}>User</button>
+        </Link>
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.inputGroup}>
           <label htmlFor="name">Name:</label>
           <input
             type="text"
@@ -216,7 +221,7 @@ export default function UsuariosPage() {
           />
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="email">Email:</label>
           <input
             type="text"
@@ -226,10 +231,10 @@ export default function UsuariosPage() {
             onChange={handleChange}
             required
           />
-          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+          {errors.email && <p className={styles.errorMessage}>{errors.email}</p>}
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="gender">Gender:</label>
           <input
             type="text"
@@ -237,12 +242,12 @@ export default function UsuariosPage() {
             name="gender"
             value={formData.gender}
             onChange={handleChange}
-            onKeyDown={handleGenderKeyDown} // Aquí se previenen las entradas no deseadas
+            required
           />
-          {errors.gender && <p style={{ color: "red" }}>{errors.gender}</p>}
+          {errors.gender && <p className={styles.errorMessage}>{errors.gender}</p>}
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="age">Age:</label>
           <input
             type="number"
@@ -252,10 +257,10 @@ export default function UsuariosPage() {
             onChange={handleChange}
             required
           />
-          {errors.age && <p style={{ color: "red" }}>{errors.age}</p>}
+          {errors.age && <p className={styles.errorMessage}>{errors.age}</p>}
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="role">Role:</label>
           <select
             id="role"
@@ -271,20 +276,20 @@ export default function UsuariosPage() {
           </select>
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="phone">Phone:</label>
           <input
             type="text"
             id="phone"
             name="phone"
             value={formData.phone}
-            onChange={handlePhoneChange}
+            onChange={handleChange}
             required
           />
-          {errors.phone && <p style={{ color: "red" }}>{errors.phone}</p>}
+          {errors.phone && <p className={styles.errorMessage}>{errors.phone}</p>}
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="rfc">RFC:</label>
           <input
             type="text"
@@ -294,11 +299,12 @@ export default function UsuariosPage() {
             onChange={handleChange}
             required
           />
-          {errors.rfc && <p style={{ color: "red" }}>{errors.rfc}</p>}
+          {errors.rfc && <p className={styles.errorMessage}>{errors.rfc}</p>}
         </div>
 
         <button type="submit">Submit</button>
       </form>
     </div>
   );
+  
 }

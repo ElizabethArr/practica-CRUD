@@ -1,0 +1,63 @@
+/* users.module.css */
+.container {
+  margin: 20px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.button {
+  margin-right: 10px;
+  padding: 8px 15px;
+  font-size: 16px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #005bb5;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.tableHeader {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.tableCell {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+/* Cambios aquí: agregar clases para las filas */
+.evenRow {
+  background-color: #f9f9f9;
+}
+
+.hoverRow:hover {
+  background-color: #f1f1f1;
+}
+
+.actions button {
+  margin-left: 5px;
+}
+
+

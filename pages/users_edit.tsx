@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useUsers } from "./useUsers"; // Importa tu hook para manejar usuarios
+import styles from './users_add.module.css';
 
 export default function EditUserPage() {
   const { users, editUser } = useUsers(); // Usamos el hook para obtener la lista de usuarios y la función de editar
@@ -185,19 +186,19 @@ export default function EditUserPage() {
   };
 
   return (
-    <div>
-      <h1>Edit User</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Edit User</h1>
 
-      <Link href="/" passHref>
+      {/* <Link href="/" passHref>
         <button style={{ marginRight: "10px" }}>Home</button>
       </Link>
 
       <Link href="/users" passHref>
         <button style={{ marginRight: "10px" }}>User</button>
-      </Link>
-
-      <form onSubmit={handleSubmit}>
-        <div>
+      </Link> */}
+      
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.inputGroup}>
           <label htmlFor="name">Name:</label>
           <input
             type="text"
@@ -209,7 +210,7 @@ export default function EditUserPage() {
           />
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="email">Email:</label>
           <input
             type="text"
@@ -219,10 +220,10 @@ export default function EditUserPage() {
             onChange={handleChange}
             required
           />
-          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+          {errors.email && <p className={styles.errorMessage}>{errors.email}</p>}
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="gender">Gender:</label>
           <input
             type="text"
@@ -230,12 +231,12 @@ export default function EditUserPage() {
             name="gender"
             value={formData.gender}
             onChange={handleChange}
-            onKeyDown={handleGenderKeyDown} // Aquí se previenen las entradas no deseadas
+            required
           />
-          {errors.gender && <p style={{ color: "red" }}>{errors.gender}</p>}
+          {errors.gender && <p className={styles.errorMessage}>{errors.gender}</p>}
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="age">Age:</label>
           <input
             type="number"
@@ -245,10 +246,10 @@ export default function EditUserPage() {
             onChange={handleChange}
             required
           />
-          {errors.age && <p style={{ color: "red" }}>{errors.age}</p>}
+          {errors.age && <p className={styles.errorMessage}>{errors.age}</p>}
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="role">Role:</label>
           <select
             id="role"
@@ -264,20 +265,20 @@ export default function EditUserPage() {
           </select>
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="phone">Phone:</label>
           <input
             type="text"
             id="phone"
             name="phone"
             value={formData.phone}
-            onChange={handlePhoneChange}
+            onChange={handleChange}
             required
           />
-          {errors.phone && <p style={{ color: "red" }}>{errors.phone}</p>}
+          {errors.phone && <p className={styles.errorMessage}>{errors.phone}</p>}
         </div>
 
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="rfc">RFC:</label>
           <input
             type="text"
@@ -287,11 +288,15 @@ export default function EditUserPage() {
             onChange={handleChange}
             required
           />
-          {errors.rfc && <p style={{ color: "red" }}>{errors.rfc}</p>}
+          {errors.rfc && <p className={styles.errorMessage}>{errors.rfc}</p>}
         </div>
 
         <button type="submit">Submit</button>
       </form>
     </div>
   );
+
+
+
+
 }
