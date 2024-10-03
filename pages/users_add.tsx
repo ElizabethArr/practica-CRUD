@@ -2,11 +2,13 @@ import { useState, ChangeEvent, FormEvent, KeyboardEvent } from "react";
 import Link from "next/link";
 import { useUsers } from "./useUsers"; // Importamos el hook para manejar usuari
 import styles from './users_add.module.css'; // Importa el módulo CSS
+import { useRouter } from 'next/router';
 
 
 
 export default function UsuariosPage() {
   const { addUser } = useUsers(); // Llamamos al hook y usamos la función addUse
+  const router = useRouter();   
 
   const [formData, setFormData] = useState({
     name: "",
@@ -157,7 +159,21 @@ export default function UsuariosPage() {
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+
+     e.preventDefault();
+
+  //   console.log(1)
+
+  //   setTimeout(() => {
+  //     console.log(2) 
+  //   }, 5000);
+
+  //  console.log(3)
+
+
+ 
+
+
 
     const genderError = validateGender(formData.gender);
     const ageError = validateAge(formData.age);
@@ -181,17 +197,33 @@ export default function UsuariosPage() {
     addUser(formData);
 
     // Reseteamos el formulario
-    setFormData({
-      name: "",
-      email: "",
-      gender: "",
-      age: "",
-      role: "",
-      phone: "",
-      rfc: "",
-    });
+    // setFormData({
+    //   name: "",
+    //   email: "",
+    //   gender: "",
+    //   age: "",
+    //   role: "",
+    //   phone: "",
+    //   rfc: "",
+    // });
 
-    console.log("Formulario enviado:", formData);
+  console.log("Formulario enviado:", formData);
+
+
+ console.log()
+ // setTimeout( () =>{
+  //   console.log('Cargando')
+  // },5000);
+
+
+  console.log('Guardando')
+  setTimeout(() =>{
+    router.push('/users');
+  },5000);
+
+  
+  
+    // Cambia '/ruta-especifica' por la ruta a la que quieres navegar
   };
 
 

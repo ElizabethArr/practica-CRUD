@@ -25,10 +25,10 @@ const UsersPage = () => {
         </Link>
       </div>
 
-      <table className={styles.table}> {/* Aplica la clase a la tabla */}
+      <table className={styles.table}>
         <thead>
           <tr>
-            <th className={styles.tableHeader}>ID</th> {/* Aplica la clase a los encabezados */}
+            <th className={styles.tableHeader}>ID</th>
             <th className={styles.tableHeader}>Name</th>
             <th className={styles.tableHeader}>Email</th>
             <th className={styles.tableHeader}>Gender</th>
@@ -42,7 +42,7 @@ const UsersPage = () => {
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td className={styles.tableCell}>{user.id}</td> {/* Aplica la clase a las celdas */}
+              <td className={styles.tableCell}>{user.id}</td>
               <td className={styles.tableCell}>{user.name}</td>
               <td className={styles.tableCell}>{user.email}</td>
               <td className={styles.tableCell}>{user.gender}</td>
@@ -51,7 +51,7 @@ const UsersPage = () => {
               <td className={styles.tableCell}>{user.phone}</td>
               <td className={styles.tableCell}>{user.rfc}</td>
               <td className={styles.tableCell}>
-                <button onClick={() => deleteUser(user.id)}>Eliminar</button> {/* Completa esta línea */}
+                <button onClick={() => deleteUser(user.id)}>Eliminar</button>
                 <button onClick={() => handleEdit(user.id)}>Editar</button>
               </td>
             </tr>
