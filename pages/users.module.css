@@ -61,4 +61,17 @@
   margin-left: 5px;
 }
 
+.deleteButton {
+  background-color: rgb(221, 61, 61);
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
 
+.editButton {
+  background-color: rgb(91, 91, 228);
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-left: 10px;
+}

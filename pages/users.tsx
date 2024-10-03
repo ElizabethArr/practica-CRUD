@@ -1,8 +1,7 @@
-
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useUsers } from "./useUsers";
-import styles from './users.module.css'; // Asegúrate de que el nombre del archivo sea correcto
+import styles from "./users.module.css"; // Asegúrate de que el nombre del archivo sea correcto
 
 const UsersPage = () => {
   const { users, deleteUser } = useUsers();
@@ -13,15 +12,15 @@ const UsersPage = () => {
   };
 
   return (
-    <div className={styles.container}> 
-      <h2 className={styles.title}>List Users</h2> 
+    <div className={styles.container}>
+      <h2 className={styles.title}>List Users</h2>
 
-      <div > 
+      <div>
         <Link href="/" passHref>
-          <button className={styles.button}>Home</button> 
+          <button className={styles.button}>Home</button>
         </Link>
         <Link href="/users_add" passHref>
-          <button className={styles.button}>Add User</button> 
+          <button className={styles.button}>Add User</button>
         </Link>
       </div>
 
@@ -51,8 +50,18 @@ const UsersPage = () => {
               <td className={styles.tableCell}>{user.phone}</td>
               <td className={styles.tableCell}>{user.rfc}</td>
               <td className={styles.tableCell}>
-                <button onClick={() => deleteUser(user.id)}>Eliminar</button>
-                <button onClick={() => handleEdit(user.id)}>Editar</button>
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => deleteUser(user.id)}
+                >
+                  Eliminar
+                </button>
+                <button
+                  className={styles.editButton}
+                  onClick={() => handleEdit(user.id)}
+                >
+                  Editar
+                </button>
               </td>
             </tr>
           ))}
